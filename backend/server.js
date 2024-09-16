@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const mysql = require('mysql');
 const projectRoutes = require('./routes/projectRoute');
 const taskRoutes = require('./routes/taskRoutes');
+const authRoute = require('./routes/authRoute'); 
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,7 @@ const mysqlConnection = require('./config/mysqlConnection');
 
 
 // Routes
+app.use('/api/auth', authRoute);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 
