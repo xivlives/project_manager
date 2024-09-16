@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const mysql = require('mysql');
+const cors = require('cors');
 const projectRoutes = require('./routes/projectRoute');
 const taskRoutes = require('./routes/taskRoutes');
 const authRoute = require('./routes/authRoute'); 
@@ -8,6 +8,14 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+
+//configure cors
+const corsOptions = {
+    origin: "http://localhost:3000",
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+} 
+app.use(cors(corsOptions));
 
 // MongoDB connection (for tasks)
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

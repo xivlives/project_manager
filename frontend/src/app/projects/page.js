@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { getProjects } from '../../services/projectService';
 import ProjectCard from '../components/ProjectCard';
