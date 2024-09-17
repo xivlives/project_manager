@@ -8,27 +8,13 @@ export default function Navbar() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold">
           <Link href="/">
-            <button>MyApp</button>
+            <button>sort.dev</button>
           </Link>
         </div>
         <div className="hidden lg:flex space-x-4">
-          <Link href="/">
-            <button className="hover:bg-gray-700 px-3 py-2 rounded">Home</button>
+          <Link href="/auth/signup">
+            <button className="border-2  border-gray-700 transform transition duration-500 hover:bg-gray-700 px-3 py-2 rounded">Organize your projects Now!</button>
           </Link>
-          <Link href="/about">
-            <button className="hover:bg-gray-700 px-3 py-2 rounded">About</button>
-          </Link>
-          <Link href="/services">
-            <button className="hover:bg-gray-700 px-3 py-2 rounded">Services</button>
-          </Link>
-          <Link href="/contact">
-            <button className="hover:bg-gray-700 px-3 py-2 rounded">Contact</button>
-          </Link>
-        </div>
-        <div className="lg:hidden">
-          <button className="px-2 py-1 border border-gray-400 rounded">
-            Menu
-          </button>
         </div>
       </div>
     </nav>

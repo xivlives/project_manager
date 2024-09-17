@@ -1,28 +1,40 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { getProjects } from '../../services/projectService';
-import ProjectCard from '../components/ProjectCard';
+import React, { useState } from 'react';
+import ProjectsBody from '../components/ProjectsBody';
+import Sidebar from '../components/projrctsSidebar';
+import AddProject from '../components/AddProject';
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState([]);
+  const [currentPanel, setCurrentPanel] = useState('projects');
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  const handleSelectPanel = (panel) => {
+    setCurrentPanel(panel);
+  };
 
-  const fetchProjects = async () => {
-    const data = await getProjects();
-    setProjects(data);
+  const handleProjectAdded = (newProject) => {
+    // Update your state or fetch new projects after adding a new project
+    console.log('New Project Added:', newProject);
+  };
+
+  const renderPanelContent = () => {
+    switch (currentPanel) {
+      case 'projects':
+        return <ProjectsBody />;
+      case 'addProject':
+        return <AddProject onProjectAdded={handleProjectAdded} />;
+      case 'settings':
+        return <div>Settings Panel Content</div>;
+      default:
+        return <ProjectsBody />;
+    }
   };
 
   return (
-    <div>
-      <h1>Your Projects</h1>
-      <div className="project-list">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+    <div className='flex flex-row bg-gray-800'>
+      <Sidebar onSelectPanel={handleSelectPanel} />
+      <main className='flex-1 p-6'>
+        {renderPanelContent()}
+      </main>
     </div>
   );
 };

@@ -1,23 +1,23 @@
-import Link from "next/link";
 import Navbar from "./components/navbar";
+import LandingPage from "./components/mainbody";
+// import Footer from "./components/landingPage/footer";
+// import FeaturesSection from "./components/landingPage/features";
+// import CoFounders from "./components/landingPage/cofounders";
 
-const LandingPage = () => {
+
+
+
+export default function Home() {
   return (
     <>
-      <Navbar />
-      <div className="dark:bg-gray-800 dark:text-white">
-        <h1 className="text-7xl font-bold">Welcome to Your Personal Project Manager</h1>
-        <div className="auth-buttons">
-          <Link href="/auth/login">
-            <button>Login</button>
-          </Link>
-          <Link href="/auth/signup">
-            <button>Sign Up</button>
-          </Link>
-        </div>
-      </div>
+    <main className="flex flex-col min-h-screen bg-gray-800 text-white">
+  <Navbar />
+    <LandingPage />
+    {/* <FeaturesSection />
+    <CoFounders />
+  <Footer /> */}
+</main>
+
     </>
   );
-};
-
-export default LandingPage;
+}
