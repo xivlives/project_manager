@@ -32,5 +32,5 @@ app.use('/api/auth', authRoute);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
