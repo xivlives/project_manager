@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
   project_id: {
-    type: Number,   // Store the corresponding MySQL project id
+    type: mongoose.Schema.Types.ObjectId,   // Store the corresponding MongoDB project id
+    required: true
+  },
+  project_name: {
+    type: String,   // Store the corresponding project name
     required: true
   },
   title: {

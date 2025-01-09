@@ -1,25 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const Project = require('../models/projectModel');
+const Project = require('../models/ProjectModel');
 
-// Get all projects with their tasks
+// Get all projects
 router.get('/', async (req, res) => {
   try {
-    const projects = await Project.getAllProjects(); // Fetch projects with tasks
-    res.json(projects);
+    const projects = await Project.find();
+    res.status(200).json(projects);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
-// Create a new project (does not include tasks)
-router.post('/', async (req, res) => {
-  const newProject = req.body;
+// Add new project
+router.post('/projects', async (req, res) => {
   try {
-    const result = await Project.createProject(newProject);
-    res.json({ message: 'Project created successfully', result });
+    const newProject = new Project({
+      title: req.body.title,
+      description: req.body.description
+    });
+    const savedProject = await newProject.save();
+    res.status(201).json(savedProject);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Delete project
+router.delete('/projects/:id', async (req, res) => {
+  try {
+    const deletedProject = await Project.findByIdAndDelete(req.params.id);
+    if (!deletedProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

@@ -1,12 +1,12 @@
 import api from '../utils/api';
 
 export const getTasks = async (projectId) => {
-  const response = await api.get(`/projects/${projectId}/tasks`);
+  const response = await api.get(`/tasks/${projectId}`);
   return response.data;
 };
 
 export const createTask = async (projectId, task) => {
-  const response = await api.post(`/projects/${projectId}/tasks`, task);
+  const response = await api.post(`/tasks/${projectId}`, task);
   return response.data;
 };
 

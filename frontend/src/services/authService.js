@@ -22,8 +22,8 @@ export const loginUser = async ({ email, password }) => {
 };
 
 
-export const signupUser = async ({fullName, email, password }) => {
-  const response = await api.post('/auth/signup', {fullName, email, password });
+export const signupUser = async ({fullName, username, email, password }) => {
+  const response = await api.post('/auth/signup', {fullName, username, email, password });
   // Assuming JWT token is returned
   localStorage.setItem('token', response.data.token);
 };
