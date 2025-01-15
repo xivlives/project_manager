@@ -29,6 +29,9 @@ const Sidebar = ({ onSelectPanel }) => {
                 </Link>
             </li>
             <li>
+              <button onClick={() => handlePanelChange('dashboard')} className="block p-4 hover:bg-gray-700">Dashboard</button>
+            </li>
+            <li>
               <button onClick={() => handlePanelChange('projects')} className="block p-4 hover:bg-gray-700">Projects</button>
             </li>
             <li>

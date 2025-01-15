@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ProjectsBody from '../components/ProjectsBody';
 import Sidebar from '../components/projrctsSidebar';
 import AddProject from '../components/AddProject';
+import Dashboard from '../dashboard/page';
 
 const ProjectsPage = () => {
   const [currentPanel, setCurrentPanel] = useState('projects');
@@ -18,6 +19,8 @@ const ProjectsPage = () => {
 
   const renderPanelContent = () => {
     switch (currentPanel) {
+      case 'dashboard':
+        return <Dashboard />;
       case 'projects':
         return <ProjectsBody />;
       case 'addProject':
@@ -25,7 +28,7 @@ const ProjectsPage = () => {
       case 'settings':
         return <div>Settings Panel Content</div>;
       default:
-        return <ProjectsBody />;
+        return <Dashboard />;
     }
   };
 
