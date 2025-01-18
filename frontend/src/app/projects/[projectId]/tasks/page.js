@@ -9,6 +9,7 @@ import {
 } from "../../../../services/taskService";
 import TaskItem from "../../../components/TaskItem";
 import Toast from "@/app/components/Toast";
+import LoadSpinner from "@/app/components/LoadSpinner";
 
 const TasksPage = ({ params }) => {
   const [tasks, setTasks] = useState([]);
@@ -17,6 +18,7 @@ const TasksPage = ({ params }) => {
   const [newTaskDescription, setNewTaskDescription] = useState("");
   const [projectName, setProjectName] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     fetchTasks();
@@ -32,12 +34,6 @@ const TasksPage = ({ params }) => {
     }
   }, [showToast]);
 
-  const fetchTasks = async () => {
-    const data = await getTasks(params.projectId);
-    setTasks(data);
-    setProjectName(projectName);
-  };
-
   useEffect(() => {
     fetchProjectName();
   }, []);
@@ -45,6 +41,13 @@ const TasksPage = ({ params }) => {
   const fetchProjectName = async () => {
     const project = await fetchProject(params.projectId);
     setProjectName(project.title);
+  };
+
+  const fetchTasks = async () => {
+    setIsLoading(true); // Set loading to true before fetching tasks
+    const data = await getTasks(params.projectId);
+    setTasks(data);
+    setIsLoading(false); // Set loading to false after fetching tasks
   };
 
   const showModal = () => {
@@ -68,11 +71,21 @@ const TasksPage = ({ params }) => {
       <h1 className="text-3xl m-4 font-bold text-slate-600 text-center">
         Tasks for {projectName} Project
       </h1>
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} onUpdate={fetchTasks} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <LoadSpinner /> {/* Render loading spinner while data is loading */}
+        </div>
+      ) : tasks.length === 0 ? (
+        <div className="text-center text-gray-500 text-lg mt-8">
+          No tasks for this project.
+        </div>
+      ) : (
+        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={task} onUpdate={fetchTasks} />
+          ))}
+        </div>
+      )}
       <button
         className="bg-gray-500 py-2 px-4 rounded fixed bottom-7 right-8"
         onClick={showModal}

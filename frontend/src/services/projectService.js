@@ -11,6 +11,6 @@ export const createProject = async (project) => {
 };
 
 export const fetchProject = async (projectId) => {
-  const response = await api.get(`/projects/${projectId}`);
+  const response = await api.get(`/projects/projects/${projectId}`);
   return response.data;
 };
