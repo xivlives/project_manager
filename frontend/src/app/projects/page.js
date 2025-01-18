@@ -4,6 +4,7 @@ import ProjectsBody from '../components/ProjectsBody';
 import Sidebar from '../components/projrctsSidebar';
 import AddProject from '../components/AddProject';
 import Dashboard from '../dashboard/page';
+import SettingsPage from '../components/SettingsPage';
 
 const ProjectsPage = () => {
   const [currentPanel, setCurrentPanel] = useState('projects');
@@ -26,7 +27,7 @@ const ProjectsPage = () => {
       case 'addProject':
         return <AddProject onProjectAdded={handleProjectAdded} />;
       case 'settings':
-        return <div>Settings Panel Content</div>;
+        return <SettingsPage />;
       default:
         return <Dashboard />;
     }

@@ -15,7 +15,7 @@ const ProjectsBody = () => {
     };
 
     return (
-        <div className="w-full justify-center items-center">
+        <div className="w-fit ml-64 h-screen justify-center items-center">
             <h1 className='text-3xl m-4 font-bold text-slate-300 text-center'> My Projects </h1>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
                 {projects.map((project) => (

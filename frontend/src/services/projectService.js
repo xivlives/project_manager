@@ -9,3 +9,8 @@ export const createProject = async (project) => {
   const response = await api.post('/projects/projects', project);
   return response.data;
 };
+
+export const fetchProject = async (projectId) => {
+  const response = await api.get(`/projects/${projectId}`);
+  return response.data;
+};

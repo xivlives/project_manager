@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getUserProjects } from '@/services/projectService';
+import { getProjects } from '@/services/projectService';
 import { getTasks } from '@/services/taskService';
 import ProjectCard from '../components/ProjectCard';
 import PieChart from '../components/charts/PieChart';
@@ -23,9 +23,9 @@ const Dashboard = () => {
 
     const fetchData = async () => {
         // Fetch projects and tasks data
-        const projectsData = await getUserProjects();
+        const projectsData = await getProjects();
         const tasksData = await Promise.all(
-            projectsData.map(project => getTasks(project.id))
+            projectsData.map(project => getTasks(project._id))
         );
         
         setProjects(projectsData);
@@ -34,7 +34,7 @@ const Dashboard = () => {
     };
 
     const calculateStats = (projects, tasks) => {
-        const completedTasks = tasks.filter(task => task.completed);
+        const completedTasks = tasks.filter(task => task.status === 'completed');
         const quickestTask = tasks.reduce((fastest, current) => {
             if (!fastest) return current;
             return current.completion_time < fastest.completion_time ? current : fastest;
@@ -49,7 +49,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="p-6">
+        <div className="p-6 ml-64">
             <h1 className="text-3xl text-center font-bold text-slate-400 mb-8">Dashboard</h1>
             
             {/* Stats Overview */}
@@ -57,7 +57,7 @@ const Dashboard = () => {
                 <StatCard title="Total Projects" value={stats.totalProjects} />
                 <StatCard title="Total Tasks" value={stats.totalTasks} />
                 <StatCard title="Completed Tasks" value={stats.completedTasks} />
-                <StatCard 
+                <StatCard
                     title="Quickest Task" 
                     value={stats.quickestTask?.title || 'N/A'} 
                     subtitle={`Completed in ${stats.quickestTask?.completion_time || 0} days`}

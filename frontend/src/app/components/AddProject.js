@@ -6,41 +6,40 @@ const AddProject = ({ onProjectAdded }) => {
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const userId = localStorage.getItem('userId');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     // Clear any previous error
     setError(null);
     setLoading(true);
-
+  
     try {
-      // Replace this with your API call or service to add a project
-      await createProject({ title, description });
-
-      if (!response.ok) {
-        throw new Error('Failed to add project');
-      }
-
-      const newProject = await response.json();
-      
+      // Call the service to add a project
+      const newProject = await createProject({ userId, title, description });
+  
       // Optionally, call a callback to update the parent state after adding the project
       if (onProjectAdded) {
         onProjectAdded(newProject);
       }
-
+  
+      setResponseMessage("Project added successfully");
+  
       // Clear the form after successful submission
       setTitle('');
       setDescription('');
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || 'Failed to add project');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
-    <div className="max-w-md mx-auto bg-gray-700 text-white p-6 rounded-lg">
+    <div className='h-screen ml-64'>
+      <div className="max-w-md mx-auto bg-gray-700 text-white p-6 rounded-lg">
       <h1 className="text-2xl font-bold mb-4">Add New Project</h1>
       
       {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -78,6 +77,8 @@ const AddProject = ({ onProjectAdded }) => {
         </button>
       </form>
     </div>
+    </div>
+    
   );
 };
 

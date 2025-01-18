@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { fetchProject } from "@/services/projectService";
-
 import {
   getTasks,
   createTask,
@@ -35,9 +34,17 @@ const TasksPage = ({ params }) => {
 
   const fetchTasks = async () => {
     const data = await getTasks(params.projectId);
-    const projectName = data[0]?.project_name || "Unnamed Project";
     setTasks(data);
     setProjectName(projectName);
+  };
+
+  useEffect(() => {
+    fetchProjectName();
+  }, []);
+
+  const fetchProjectName = async () => {
+    const project = await fetchProject(params.projectId);
+    setProjectName(project.title);
   };
 
   const showModal = () => {
