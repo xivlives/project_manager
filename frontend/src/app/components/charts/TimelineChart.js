@@ -24,7 +24,7 @@ ChartJS.register(
 
 const TimelineChart = ({ data }) => {
   const chartData = {
-    labels: data.map(project => project.name),
+    labels: data.map(project => project.title),
     datasets: [
       {
         label: 'Project Timeline',

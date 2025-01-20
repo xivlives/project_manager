@@ -7,7 +7,7 @@ import Dashboard from '../dashboard/page';
 import SettingsPage from '../components/SettingsPage';
 
 const ProjectsPage = () => {
-  const [currentPanel, setCurrentPanel] = useState('projects');
+  const [currentPanel, setCurrentPanel] = useState('');
 
   const handleSelectPanel = (panel) => {
     setCurrentPanel(panel);

@@ -14,3 +14,16 @@ export const updateTask = async (taskId, taskData) => {
   const response = await api.put(`/tasks/${taskId}`, taskData);
   return response.data;
 };
+
+export const generateTask = async (projectId, projectDescription) => {
+  try {
+    const { data } = await api.post(`/tasks/${projectId}/generate-tasks`, {
+      projectDescription
+    });
+    return data.tasks;
+  } catch (error) {
+    console.error("Error generating tasks:", error);
+    throw error;
+  }
+};
+
