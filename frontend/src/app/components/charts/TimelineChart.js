@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import dayjs from 'dayjs';
 
 ChartJS.register(
   CategoryScale,
@@ -27,8 +28,12 @@ const TimelineChart = ({ data }) => {
     labels: data.map(project => project.title),
     datasets: [
       {
-        label: 'Project Timeline',
-        data: data.map(project => project.duration),
+        label: 'Days to Completion',
+        data: data.map(project => {
+          const start = dayjs(project.startDate);
+          const end = dayjs(project.endDate);
+          return end.diff(start, 'day');
+        }),
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1,
@@ -45,7 +50,17 @@ const TimelineChart = ({ data }) => {
     },
     scales: {
       y: {
+        title: {
+          display: true,
+          text: 'Days',
+        },
         beginAtZero: true,
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Projects',
+        },
       },
     },
   };

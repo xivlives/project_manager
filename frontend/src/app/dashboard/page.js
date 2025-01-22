@@ -22,16 +22,23 @@ const Dashboard = () => {
     }, []);
 
     const fetchData = async () => {
-        // Fetch projects and tasks data
         const projectsData = await getProjects();
         const tasksData = await Promise.all(
             projectsData.map(project => getTasks(project._id))
         );
         
-        setProjects(projectsData);
+        // Ensure projects include `startDate` and `endDate`
+        const projectsWithDates = projectsData.map(project => ({
+            ...project,
+            startDate: project.startDate || '2025-01-01', // Default if missing
+            endDate: project.endDate || '2025-12-31', // Default if missing
+        }));
+    
+        setProjects(projectsWithDates);
         setTasks(tasksData.flat());
-        calculateStats(projectsData, tasksData.flat());
+        calculateStats(projectsWithDates, tasksData.flat());
     };
+    
 
     const calculateStats = (projects, tasks) => {
         const completedTasks = tasks.filter(task => task.status === 'completed');
@@ -49,7 +56,7 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="p-6 ml-64">
+        <div className="p-6 ml-64 h-fit">
             <h1 className="text-3xl text-center font-bold text-slate-400 mb-8">Dashboard</h1>
             
             {/* Stats Overview */}
