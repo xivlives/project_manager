@@ -30,8 +30,8 @@ const Dashboard = () => {
         // Ensure projects include `startDate` and `endDate`
         const projectsWithDates = projectsData.map(project => ({
             ...project,
-            startDate: project.startDate || '2025-01-01', // Default if missing
-            endDate: project.endDate || '2025-12-31', // Default if missing
+            startDate: project.dateCreated || '2025-01-01', // Default if missing
+            endDate: project.completionDate || '2025-12-31', // Default if missing
         }));
     
         setProjects(projectsWithDates);
