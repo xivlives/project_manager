@@ -4,6 +4,8 @@ import { useState } from 'react';
 const Sidebar = ({ onSelectPanel }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard'); // State to track the active tab
+  const username = localStorage.getItem('username');
+  console.log(username);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -20,7 +22,7 @@ const Sidebar = ({ onSelectPanel }) => {
     >
       <div className="flex flex-col h-full">
         <div className="flex items-center justify-between p-4 bg-gray-900">
-          <h1 className={`text-xl font-bold ${isOpen ? 'block' : 'hidden'}`}>HI, User</h1>
+          <h1 className={`text-xl font-bold ${isOpen ? 'block' : 'hidden'}`}>HI, {username}</h1>
           <button onClick={toggleSidebar} className="text-white">
             {isOpen ? 'Collapse' : 'Expand'}
           </button>

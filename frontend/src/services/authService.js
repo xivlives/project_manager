@@ -8,7 +8,8 @@ export const loginUser = async ({ email, password }) => {
     // Ensure token exists before setting it
     if (response.data && response.data.token) {
       localStorage.setItem('token', response.data.token);
-      locaStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('username', response.data.name);
     } else {
       throw new Error('Token not found in response');
     }
