@@ -32,8 +32,14 @@ export const signupUser = async ({fullName, username, email, password }) => {
 
 export const logoutUser = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('username');
 };
 
 export const isLoggedIn = () => {
-  return localStorage.getItem('token') !== null;
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const username = localStorage.getItem('username');
+  
+  return Boolean(token && userId && username);
 };

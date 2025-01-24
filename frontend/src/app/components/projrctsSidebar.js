@@ -1,11 +1,18 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Sidebar = ({ onSelectPanel }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard'); // State to track the active tab
-  const username = localStorage.getItem('username');
-  console.log(username);
+  const [username, setUsername] = useState('');
+  // console.log(username);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);

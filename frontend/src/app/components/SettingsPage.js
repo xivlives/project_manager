@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
+import { logoutUser } from '@/services/authService';
 
 const SettingsPage = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
   const handleLogout = () => {
-    // Clear user session or token
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    alert('You have been logged out');
+    logoutUser();
     // Redirect to login page (if applicable)
-    window.location.href = '/login';
+    window.location.href = '/auth/login';
   };
 
   return (

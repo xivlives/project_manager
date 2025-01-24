@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { loginUser, signupUser, isLoggedIn } from "../../services/authService";
 
 const AuthForm = () => {
+  const pathname = usePathname(); // Get the current route
   const [mode, setMode] = useState("login"); // Manage login/signup mode
   const [fullName, setFullName] = useState(""); // Full name for signup
   const [username, setUsername] = useState("");
@@ -12,11 +13,20 @@ const AuthForm = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // Sync `mode` with the current route
+  useEffect(() => {
+    if (pathname === "/auth/signup") {
+      setMode("signup");
+    } else if (pathname === "/auth/login") {
+      setMode("login");
+    }
+  }, [pathname]);
+
   // Check if the user is already logged in on component mount
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const loggedIn = await isLoggedIn();
+        const loggedIn = isLoggedIn();
         if (loggedIn) {
           router.push("/projects"); // Redirect to projects page if user is logged in
         }
@@ -35,10 +45,12 @@ const AuthForm = () => {
       if (mode === "login") {
         await loginUser({ email, password });
         router.push("/projects"); // Redirect to projects page on successful login
-      } else {
+      } else if (mode === "signup") {
         // Pass full name during signup
         await signupUser({ fullName, username, email, password });
-        router.push("/auth/login"); // Redirect to login page on successful signup
+
+        // Redirect to login page after successful signup
+        router.push("/auth/login");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
@@ -47,9 +59,13 @@ const AuthForm = () => {
 
   // Toggle between login and signup modes
   const toggleMode = () => {
-    setMode(mode === "login" ? "signup" : "login");
+    const newMode = mode === "login" ? "signup" : "login";
+    setMode(newMode);
     setFullName(""); // Clear full name when switching back to login
     setError(""); // Clear any existing errors
+
+    // Update the URL dynamically
+    router.push(newMode === "signup" ? "/auth/signup" : "/auth/login");
   };
 
   return (

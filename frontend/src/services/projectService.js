@@ -1,8 +1,9 @@
 import api from '../utils/api';
 
 // Fetch all projects
-export const getProjects = async () => {
-  const response = await api.get('/projects');
+export const getProjects = async (userId) => {
+  console.log("Fetching projects for user ID:", userId);
+  const response = await api.get('/projects', { params: { userId }, });
   return response.data;
 };
 
